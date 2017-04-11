@@ -26,6 +26,8 @@ class Sq1Slideshow extends StylePluginBase {
     $options['image_field'] = ['default' => ''];
     $options['include_title'] = ['default' => 1];
     $options['link_slides'] = ['default' => 1];
+    $options['autoplay'] = ['default' => 1];
+    $options['slides_per_entity'] = ['default' => 1];
 
     return $options;
   }
@@ -76,6 +78,24 @@ class Sq1Slideshow extends StylePluginBase {
         1 => $this->t('Yes'),
         0 => $this->t('No'),
       ]
+    ];
+
+    $form['autoplay'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Autoplay'),
+      '#default_value' => $this->options['autoplay'],
+      '#options' => [
+        1 => $this->t('Yes'),
+        0 => $this->t('No'),
+      ]
+    ];
+
+    $form['slides_per_entity'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Slides per entity'),
+      '#min' => 0,
+      '#max' => 10,
+      '#default_value' => $this->options['slides_per_entity'],
     ];
 
   }

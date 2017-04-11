@@ -171,7 +171,11 @@
 
         });
 
-        $(element).data('timer', setInterval(function(){autoplaySlideshow(element)}, 3000));
+        if ($(element).hasClass('autoplay')) {
+
+          $(element).data('timer', setInterval(function(){autoplaySlideshow(element)}, 3000));
+
+        }
 
       }
 
