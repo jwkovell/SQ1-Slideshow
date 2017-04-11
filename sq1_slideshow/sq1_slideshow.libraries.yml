@@ -1,0 +1,11 @@
+sq1_slideshow.base:
+  version: VERSION
+  css:
+    component:
+      css/slideshow.css: {}
+      css/banner.css: {}
+  js:
+    js/slideshow.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once

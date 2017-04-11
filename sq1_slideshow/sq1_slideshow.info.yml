@@ -1,0 +1,7 @@
+name: SQ1 Slideshow
+type: module
+description: 'Provides a slideshow display for the SQ1 theme.'
+package: SQ1
+core: '8.x'
+dependencies:
+  - views

@@ -1,0 +1,44 @@
+<?php
+
+use Drupal\node\Entity\Node;
+
+function template_preprocess_views_view_sq1_slideshow(&$variables) {
+
+  // View options set by user.
+  $options = $variables['view']->style_plugin->options;
+
+  // Update options for twig.
+  $variables['options'] = $options;
+  $content = [];
+  $image_field = $options['image_field'];
+
+  // If an image field was provided...
+  if (strlen($image_field)) {
+
+    foreach ($variables['view']->result as $result_key => $result) {
+
+      $id = $result->nid;
+      $node = Node::load($id);
+
+      if ($node->hasField($image_field)) {
+
+        // Loop through images referenced by this field.
+        foreach ($node->$image_field->referencedEntities() as $entity_key => $entity) {
+
+          $content[$result_key . '-' . $entity_key] = [];
+          $content[$result_key . '-' . $entity_key]['id'] = $id;
+          $content[$result_key . '-' . $entity_key]['title'] = $node->get('title')->value;
+          $content[$result_key . '-' . $entity_key]['image'] = $entity->url();
+
+        }
+
+      }
+
+    }
+
+  }
+
+  $variables['content'] = $content;
+  $variables['module_root'] = drupal_get_path('module','sq1_slideshow');
+
+}

@@ -1,0 +1,28 @@
+{{ attach_library('sq1_slideshow/sq1_slideshow.base') }}
+
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+
+{% if content|length > 3 %}
+
+  <ul class="sq1-slideshow">
+    {% for key, item in content %}
+      <li class="sq1-slide">
+        {% if options.link_slides == 1 %}
+          <a class="sq1-slide-image" href="/node/{{ item.id }}" style="background-image: url({{ item.image }})"></a>
+        {% else %}
+          <div class="sq1-slide-image" href="/node/{{ item.id }}" style="background-image: url({{ item.image }})"></div>
+        {% endif %}
+        {% if options.include_title == 1 %}
+          <div class="sq1-slide-title">{{ item.title }}</div>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+
+{% elseif content|length > 0 %}
+
+  <div class="sq1-banner" style="background-image: url({{ content|first.image }})"></div>
+
+{% endif %}

@@ -1,0 +1,6 @@
+.sq1-banner {
+  padding-top: calc(100% / 3);
+  border-top: 10px solid #000;
+  border-bottom: 10px solid #000;
+  background-color: #000;
+}
