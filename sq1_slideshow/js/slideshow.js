@@ -48,10 +48,41 @@
 
       }
 
+      function positionSlides(element) {
+
+        // Get slide increment width.
+        var slideshowWidth = $(element).width() * 2;
+        var slideWidth = $(element).children('.sq1-slide').first().width();
+        var incrementWidth = ((slideWidth / slideshowWidth) * 100) + 2;
+
+        var slideCount = $(element).children('.sq1-slide').length;
+
+        // Get index for the current slide.
+        var currentSlideIndex = $(element).data('currentSlide');
+
+        // Get index for the next slide.
+        var nextSlideIndex = incrementSlideIndex(currentSlideIndex, (slideCount - 1));
+
+        // Position the next slide.
+        $(element).children('.sq1-slide').eq( nextSlideIndex ).css({'left': incrementWidth + '%'});
+
+        // Get index for the previous slide.
+        var previousSlideIndex = decrementSlideIndex(currentSlideIndex, (slideCount - 1));
+
+        // Position the previous slide.
+        $(element).children('.sq1-slide').eq( previousSlideIndex ).css({'left': '-' + incrementWidth + '%'});
+
+      }
+
       function advanceSlideshow(element) {
 
         // If the slideshow is not in a locked state...
         if ($(element).data('locked') == false) {
+
+          // Get slide increment width.
+          var slideshowWidth = $(element).width() * 2;
+          var slideWidth = $(element).children('.sq1-slide').first().width();
+          var incrementWidth = ((slideWidth / slideshowWidth) * 100) + 2;
 
           // Lock the slideshow.
           $(element).data('locked', true);
@@ -59,23 +90,30 @@
           // Remove any classes tagging a slide as current.
           $(element).children('.sq1-slide').removeClass('current');
 
+          // Get slide count.
           var slideCount = $(element).children('.sq1-slide').length;
-          
+
+          // Get index for the current slide.
+          var currentSlideIndex = $(element).data('currentSlide');
+
           // Get index for the next slide.
-          var nextSlideIndex = incrementSlideIndex($(element).data('currentSlide'), (slideCount - 1));
+          var nextSlideIndex = incrementSlideIndex(currentSlideIndex, (slideCount - 1));
+
+          // Position slides.
+          positionSlides(element);
 
           // Get index for the on deck slide.
           var ondeckSlideIndex = incrementSlideIndex(nextSlideIndex, (slideCount - 1));
 
+          // Position the on deck slide.
+          $(element).children('.sq1-slide').eq( ondeckSlideIndex ).css({'left': (incrementWidth * 2) + '%'});
+
           // Update the current slide index.
           $(element).data('currentSlide', nextSlideIndex);
 
-          // Position the on deck slide.
-          $(element).children('.sq1-slide').eq( ondeckSlideIndex ).css({'left': '154%'})
-
           // Move all slides.
           $(element).children('.sq1-slide').animate({
-            'left': '-=77%'
+            'left': '-=' + incrementWidth + '%'
           },{
             'complete': function() {
               // Unlock the slideshow.
@@ -96,26 +134,38 @@
           // Lock the slideshow.
           $(element).data('locked', true);
 
+          // Get slide increment width.
+          var slideshowWidth = $(element).width() * 2;
+          var slideWidth = $(element).children('.sq1-slide').first().width();
+          var incrementWidth = ((slideWidth / slideshowWidth) * 100) + 2;
+
           // Remove any classes tagging a slide as current.
           $(element).children('.sq1-slide').removeClass('current');
 
+          // Get slide count.
           var slideCount = $(element).children('.sq1-slide').length;
+
+          // Get index for the current slide.
+          var currentSlideIndex = $(element).data('currentSlide');
           
-          // Get index for the next slide.
-          var nextSlideIndex = decrementSlideIndex($(element).data('currentSlide'), (slideCount - 1));
+          // Get index for the previous slide.
+          var previousSlideIndex = decrementSlideIndex(currentSlideIndex, (slideCount - 1));
+
+          // Position slides.
+          positionSlides(element);
 
           // Get index for the on deck slide.
-          var ondeckSlideIndex = decrementSlideIndex(nextSlideIndex, (slideCount - 1));
-
-          // Update the current slide index.
-          $(element).data('currentSlide', nextSlideIndex);
+          var ondeckSlideIndex = decrementSlideIndex(previousSlideIndex, (slideCount - 1));
 
           // Position the on deck slide.
-          $(element).children('.sq1-slide').eq( ondeckSlideIndex ).css({'left': '-154%'})
+          $(element).children('.sq1-slide').eq( ondeckSlideIndex ).css({'left': '-' + (incrementWidth * 2) + '%'});
+
+          // Update the current slide index.
+          $(element).data('currentSlide', previousSlideIndex);
 
           // Move all slides.
           $(element).children('.sq1-slide').animate({
-            'left': '+=77%'
+            'left': '+=' + incrementWidth + '%'
           },{
             'complete': function() {
               // Unlock the slideshow.
@@ -185,6 +235,21 @@
 
         // Prepare this slideshow.
         prepareSlideshow($(this));
+
+        // Position slideshow slides.
+        positionSlides($(this));
+
+      });
+
+      $( window ).resize(function() {
+
+        // Loop through all SQ1 slideshows on this page.
+        $('.sq1-slideshow').each(function(){
+
+          // Position slideshow slides.
+          positionSlides($(this));
+
+        });
 
       });
 
