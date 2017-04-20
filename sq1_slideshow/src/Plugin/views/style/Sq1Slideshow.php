@@ -28,6 +28,8 @@ class Sq1Slideshow extends StylePluginBase {
     $options['link_slides'] = ['default' => 1];
     $options['autoplay'] = ['default' => 1];
     $options['slides_per_entity'] = ['default' => 1];
+    $options['slide_shape'] = ['default' => 'rectangular'];
+    $options['slide_shadow'] = ['default' => 'drop-shadow'];
 
     return $options;
   }
@@ -87,6 +89,28 @@ class Sq1Slideshow extends StylePluginBase {
       '#options' => [
         1 => $this->t('Yes'),
         0 => $this->t('No'),
+      ]
+    ];
+
+    $form['slide_shape'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Slide shape'),
+      '#default_value' => $this->options['slide_shape'],
+      '#options' => [
+        'rectangular' => $this->t('Rectangular'),
+        'rounded' => $this->t('Rounded'),
+      ]
+    ];
+
+    $form['slide_shadow'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Slide shadow'),
+      '#default_value' => $this->options['slide_shadow'],
+      '#options' => [
+        'drop-shadow' => $this->t('Drop shadow'),
+        'drop-and-inset-shadow' => $this->t('Drop and inset shadow'),
+        'inset-shadow' => $this->t('Inset shadow'),
+        'no-shadow' => $this->t('No shadow'),
       ]
     ];
 

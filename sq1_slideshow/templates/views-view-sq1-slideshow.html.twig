@@ -4,29 +4,29 @@
   <h3>{{ title }}</h3>
 {% endif %}
 
-{% set classes = 'sq1-slideshow' %}
+{% set classes = 'sq1-slideshow' ~ ' ' ~ options.slide_shape ~ ' ' ~ options.slide_shadow %}
 
 {% if options.autoplay == 1 %}
   {% set classes = classes ~ ' autoplay' %}
 {% endif %}
 
 {% if content|length > 3 %}
-
-  <ul class="{{ classes }}">
-    {% for key, item in content %}
-      <li class="sq1-slide">
-        {% if options.link_slides == 1 %}
-          <a class="sq1-slide-image" href="/node/{{ item.id }}" style="background-image: url({{ item.image }})"></a>
-        {% else %}
-          <div class="sq1-slide-image" href="/node/{{ item.id }}" style="background-image: url({{ item.image }})"></div>
-        {% endif %}
-        {% if options.include_title == 1 %}
-          <div class="sq1-slide-title">{{ item.title }}</div>
-        {% endif %}
-      </li>
-    {% endfor %}
-  </ul>
-
+  <div class="{{ classes }}">
+    <ul class="sq1-slides">
+      {% for key, item in content %}
+        <li class="sq1-slide">
+          {% if options.link_slides == 1 %}
+            <a class="sq1-slide-image" href="/node/{{ item.id }}" style="background-image: url({{ item.image }})"></a>
+          {% else %}
+            <div class="sq1-slide-image" href="/node/{{ item.id }}" style="background-image: url({{ item.image }})"></div>
+          {% endif %}
+          {% if options.include_title == 1 %}
+            <div class="sq1-slide-title">{{ item.title }}</div>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 {% elseif content|length > 0 %}
 
   <div class="sq1-banner" style="background-image: url({{ content|first.image }})"></div>
