@@ -189,14 +189,38 @@
         // By default, the slideshow is not in a locked state.
         $(element).data('locked', false);
 
-        // By default, the slideshow is set to autoplay.
-        $(element).data('autoplay', true);
-
         // By default, the current slide is 0.
         $(element).data('currentSlide', 0);
 
         // Tag slides.
         tagSlides(element);
+
+        if ($(element).hasClass('autoplay')) {
+          // Set the slideshow to autoplay.
+          $(element).data('autoplay', true);
+        } else {
+          $(element).data('autoplay', false);
+        }
+
+        // When previous button is clicked...
+        $(element).find('.sq1-slideshow-controls .previous').click(function(event){
+
+          // Disable autoplay.
+          $(element).data('autoplay', false);
+
+          retreatSlideshow(element);
+
+        });
+
+        // When next button is clicked...
+        $(element).find('.sq1-slideshow-controls .next').click(function(event){
+
+          // Disable autoplay.
+          $(element).data('autoplay', false);
+
+          advanceSlideshow(element);
+
+        });
 
         // When a slide is clicked...
         $(element).find('.sq1-slide').click(function(event){
@@ -227,11 +251,7 @@
 
         });
 
-        if ($(element).hasClass('autoplay')) {
-
-          $(element).data('timer', setInterval(function(){autoplaySlideshow(element)}, 3000));
-
-        }
+        $(element).data('timer', setInterval(function(){autoplaySlideshow(element)}, 3000));
 
       }
 

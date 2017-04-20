@@ -12,6 +12,10 @@
 
 {% if content|length > 3 %}
   <div class="{{ classes }}">
+    <div class="sq1-slideshow-controls">
+      <div class="previous"></div>
+      <div class="next"></div>
+    </div>
     <ul class="sq1-slides">
       {% for key, item in content %}
         <li class="sq1-slide">
