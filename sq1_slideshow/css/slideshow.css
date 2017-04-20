@@ -101,7 +101,8 @@
     margin: 0;
   }
   
-  .sq1-slideshow.rounded .sq1-slide-image {
+  .sq1-slideshow.rounded .sq1-slide-image,
+  .sq1-slideshow.rounded .sq1-slide-title  {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
